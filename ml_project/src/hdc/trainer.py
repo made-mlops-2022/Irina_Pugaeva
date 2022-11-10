@@ -1,14 +1,15 @@
-from time import time
-import pickle
-import pandas as pd
 import json
+import os
+import pickle
+from time import time
+
+import pandas as pd
+import sklearn
 from hydra.utils import instantiate
 from omegaconf import OmegaConf
-import sklearn
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV
-from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.pipeline import Pipeline
 
 from hdc.logtransformer import LogTransformer
 from hdc.utils.config import TrainConfig
@@ -36,8 +37,14 @@ class Trainer:
         )
         
     def load_data(self):
+        logger.info('Load data...')
+        if os.path.isfile(self.cfg.data_params['raw_data_path']):
+            df = pd.read_csv(self.cfg.data_params['raw_data_path'])
+            return df
+        return None
+
+    def split_data(self, df):
         logger.info('Split data...')
-        df = pd.read_csv(self.cfg.data_params['raw_data_path'])
         df_train, df_oos = train_test_split(
             df, 
             stratify=df['condition'], 
@@ -63,7 +70,10 @@ class Trainer:
     
     def validate(self, X_test, y_test):
         y_pred = self.predict(X_test)
-        logger.info('Test set accuracy score for best params: %.3f ' % accuracy_score(y_test, y_pred))
+        metric = accuracy_score(y_test, y_pred)
+        with open(self.cfg.metrics_path, "w") as f:
+            json.dump({"accuracy_score": metric}, f)
+        logger.info('Test set accuracy score for best params: %.3f ' % metric)
         
     def save_model(self):
         pickle.dump(self.gs.best_estimator_, open(self.cfg.model_path, 'wb'))

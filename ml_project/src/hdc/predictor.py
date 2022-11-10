@@ -1,6 +1,7 @@
-import pickle
-import pandas as pd
 import json
+import pickle
+
+import pandas as pd
 
 from hdc.utils.config import PredictConfig
 from hdc.utils.logger import logger
