@@ -28,7 +28,6 @@ jobs:
         pip install -e ml_project
     - name: Test with pytest
       run: |
-	pwd
-	pip install pytest
-	cd ml_project
+        pwd
+        cd ml_project
         pytest tests
