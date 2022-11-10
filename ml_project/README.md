@@ -7,7 +7,7 @@ Heart disease classifier
 
     python -m venv .venv
     source .venv/bin/activate
-    pip install -r requirements.txt
+    pip install -e .
 
 Запуск всех скриптов производится из папки ml_project
 Обучение модели (4 конфигурации):
