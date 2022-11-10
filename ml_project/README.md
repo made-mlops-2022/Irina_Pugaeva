@@ -3,6 +3,28 @@ hdc
 
 Heart disease classifier
 
+Установка:
+
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+
+Запуск всех скриптов производится из папки ml_project
+Обучение модели (4 конфигурации):
+
+    python scripts/train.py configs/train_svm_015.json
+    python scripts/train.py configs/train_svm_033.json
+    python scripts/train.py configs/train_logreg_015.json
+    python scripts/train.py configs/train_logreg_033.json
+
+Получение предсказний:
+
+    python scripts/predict.py configs/predict.json
+
+Запуск тестов:
+
+    pytest tests
+    
 Project Organization
 ------------
 
