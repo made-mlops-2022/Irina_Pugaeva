@@ -1,6 +1,7 @@
-import pickle
-import pandas as pd
 import json
+import pickle
+
+import pandas as pd
 
 from hdc.utils.config import PredictConfig
 from hdc.utils.logger import logger
@@ -14,9 +15,9 @@ class Predictor:
         self.RS = self.cfg.data_params['random_state']
         self.model = pickle.load(open(self.cfg.model_path, 'rb'))
         
-    def load_data(self):
+    def load_data(self) -> pd.DataFrame:
         data = pd.read_csv(self.cfg.data_params['scoring_data_path'])
-        data = data.drop(columns=['condition'], errors="ignore")
+        data = data.drop(columns=[self.cfg.data_params["target_col_name"]], errors="ignore")
         return data
         
     def predict(self, data):

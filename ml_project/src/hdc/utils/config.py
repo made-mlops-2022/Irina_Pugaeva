@@ -9,8 +9,12 @@ from typing import Dict, List, Any
 class TrainConfig:
     model: Dict[str, Any]
     model_path: str
+    metrics_path: str
     search_space: Dict[str, Any]
     data_params: Dict[str, Any]
+    cv: int
+    n_jobs: int
+    verbose: int
 
 
 @dataclass_json
