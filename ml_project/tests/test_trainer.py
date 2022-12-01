@@ -1,17 +1,17 @@
 import pathlib
 import unittest
 
-import numpy as np
-from hdc.trainer import Trainer
 from sklearn.model_selection import GridSearchCV
 from sklearn.utils.validation import check_is_fitted
+
+from hdc.trainer import Trainer
 
 from data_generator import generate_fake_dataset
 
 default_cfg_path = pathlib.Path(".") / "configs" / "train_svm_033.json"
 
-class Test(unittest.TestCase):
 
+class Test(unittest.TestCase):
     def test_model_isinstance_gridsearch(self):
         trainer = Trainer(default_cfg_path)
         self.assertIsInstance(trainer.gs, GridSearchCV)

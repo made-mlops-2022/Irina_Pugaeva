@@ -10,6 +10,7 @@ Heart disease classifier
     pip install -e .
 
 Запуск всех скриптов производится из папки ml_project
+
 Обучение модели (4 конфигурации):
 
     python scripts/train.py configs/train_svm_015.json
