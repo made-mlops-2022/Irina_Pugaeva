@@ -1,0 +1,9 @@
+hydra-core==1.2.0
+dataclasses-json==0.5.7
+scikit-learn
+pandas
+numpy
+setuptools==63.4.1
+openpyxl==3.0.10
+faker==15.3.1
+click==8.1.3

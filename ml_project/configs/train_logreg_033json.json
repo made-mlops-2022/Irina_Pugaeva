@@ -1,0 +1,43 @@
+{
+    "model": {
+        "_target_": "sklearn.linear_model.LogisticRegression",
+        "class_weight": "balanced",
+        "n_jobs": -1,
+        "random_state": 42
+    },
+    "model_path": "models/clf_pipeline.pickle",
+    "metrics_path": "models/metrics.json",
+    "search_space": 
+    {
+        "clf__penalty": [
+            "l1",
+            "l2"
+        ],
+        "clf__C": [
+            0.01,
+            0.05,
+            0.1,
+            0.5,
+            1,
+            5,
+            10
+        ],
+        "clf__solver": [
+            "liblinear",
+            "saga"
+        ]
+    },
+
+    "cv": 5,
+    "n_jobs": -1,
+    "verbose": 1,
+    
+    "data_params": {
+        "raw_data_path": "data/raw/heart_cleveland_upload.csv",
+        "test_size": 0.33,
+        "random_state": 42,
+        "train_data_path": "data/raw/train.csv",
+        "test_data_path": "data/raw/oos.csv",
+        "target_col_name": "condition"
+    }
+}

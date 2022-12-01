@@ -1,0 +1,9 @@
+{
+    "model_path": "models/clf_pipeline.pickle",
+    "data_params": {
+        "random_state": 42,
+        "scoring_data_path": "data/scoring_data/scoring_data.csv",
+        "path_to_result": "data/scoring_data/results.xlsx",
+        "target_col_name": "condition"
+    }
+}
