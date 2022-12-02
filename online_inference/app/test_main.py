@@ -1,30 +1,25 @@
-import pytest
+import json
 from fastapi.testclient import TestClient
 
 from main import app
 
-
-@pytest.fixture()
-def test_request_data():
-    data = {
-        "age": 35,
-        "sex": 0,
-        "cp": 3,
-        "trestbps": 138,
-        "chol": 183,
-        "fbs": 0,
-        "restecg": 0,
-        "thalach": 182,
-        "exang": 0,
-        "oldpeak": 1.4,
-        "slope": 0,
-        "ca": 0,
-        "thal": 0,
-    }
-    return str(data)
-
-
 client = TestClient(app)
+
+test_request_data = {
+    "age": 35,
+    "sex": 0,
+    "cp": 3,
+    "trestbps": 138,
+    "chol": 183,
+    "fbs": 0,
+    "restecg": 0,
+    "thalach": 182,
+    "exang": 0,
+    "oldpeak": 1.4,
+    "slope": 0,
+    "ca": 0,
+    "thal": 0,
+}
 
 
 def test_app_root():
@@ -35,9 +30,10 @@ def test_app_root():
     assert "Heart disease classificator" in response.text
 
 
-# def test_app_predict(test_request_data):
-#     with client:
-#         response = client.get(test_request_data)
-#     assert 200 == response.status_code
-#     predictions = response.json()
-#     assert predictions["preditions"] in {"Positive", "Negative"}
+def test_app_predict():
+    with client:
+        response = client.get(json.dumps(test_request_data))
+        print(response)
+    # assert 200 == response.status_code
+    predictions = response.json()
+    assert predictions == {"Condition": "Negative: no disease"}

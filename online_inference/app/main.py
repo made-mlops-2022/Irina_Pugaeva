@@ -4,11 +4,12 @@ import logging
 import pathlib
 import joblib
 import pandas as pd
-from typing import Union
+from typing import Union, List
 
 from fastapi import FastAPI
 from fastapi_health import health
-from pydantic import BaseModel
+
+from .validator import RequestData, ResponseData
 
 # TO do импортировать предиктор, а не модель
 logger = logging.getLogger(__name__)
@@ -47,30 +48,21 @@ async def root():
     return {"Heart disease classificator"}
 
 
-@app.get("/predict")
-def predict(data_json: str):
+@app.post("/predict", response_model=ResponseData)
+def predict(data: RequestData):
     """A simple function that predict heart disease"""
     logger.info("Загрузка данных...")
-    data = json.loads(data_json)  # dict = {"col1": 123123, } # list
-    data = pd.DataFrame.from_records([data])
+    data = pd.DataFrame.from_records([data.dict()])
     # perform prediction
-    print(data)
     logger.info("Предсказание классов...")
     prediction = model.predict(data).item(0)  # array
-
     # output dictionary
-    is_disease = {0: "Negative", 1: "Positive"}
+    is_disease = {0: "Negative: no disease", 1: "Positive: disease"}
 
     # show results
-    result = {"prediction": is_disease[prediction]}
-
+    result = ResponseData(condition=is_disease[prediction])
     # return result
     return result
-
-
-# @app.put("/items/{item_id}")
-# def update_item(item_id: int, item: Item):
-#     return {"item_name": item.name, "item_id": item_id}
 
 
 def check_health():

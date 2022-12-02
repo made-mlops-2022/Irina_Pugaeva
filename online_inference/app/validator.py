@@ -4,7 +4,7 @@ from fastapi.exceptions import HTTPException
 
 
 class ResponseData(BaseModel):
-    condition: Literal[0, 1]
+    condition: str
 
 
 class RequestData(BaseModel):
@@ -24,12 +24,12 @@ class RequestData(BaseModel):
 
     @validator("age")
     def validate_age(cls, val):
-        if val < 0 or val > 100:
-            raise HTTPException(status_code=400, detail="Wrong age"])
+        if val < 0 or val > 150:
+            raise HTTPException(status_code=400, detail="Wrong age")
         return val
 
     @validator("chol")
     def validation_chol(cls, val):
-        if val < 0 or val > 500:
+        if val < 0 or val > 800:
             raise HTTPException(status_code=400, detail="Wrong chol")
         return val
