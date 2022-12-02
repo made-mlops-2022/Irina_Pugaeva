@@ -3,22 +3,26 @@ from fastapi.testclient import TestClient
 
 from main import app
 
+
 @pytest.fixture()
 def test_request_data():
-    data = {"age": 35,
-            "sex": 0,
-            "cp": 3,
-            "trestbps": 138,
-            "chol": 183,
-            "fbs": 0,
-            "restecg": 0,
-            "thalach": 182,
-            "exang": 0,
-            "oldpeak": 1.4,
-            "slope": 0,
-            "ca": 0,
-            "thal": 0}
-    return  str(data)
+    data = {
+        "age": 35,
+        "sex": 0,
+        "cp": 3,
+        "trestbps": 138,
+        "chol": 183,
+        "fbs": 0,
+        "restecg": 0,
+        "thalach": 182,
+        "exang": 0,
+        "oldpeak": 1.4,
+        "slope": 0,
+        "ca": 0,
+        "thal": 0,
+    }
+    return str(data)
+
 
 client = TestClient(app)
 
