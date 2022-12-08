@@ -92,3 +92,5 @@ target/
 # Custom
 logs
 # models
+
+airflow_ml_dags/data/
