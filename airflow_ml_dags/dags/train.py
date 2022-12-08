@@ -19,7 +19,7 @@ DEFAULT_ARGS = {
 RAW_DATA_PATH = "/data/raw/{{ ds }}"
 PROCESSED_DATA_PATH = "/data/processed/{{ ds }}"
 SPLITTED_DATA_PATH = "/data/splitted/{{ ds }}"
-MODEL_PATH = "/data/models/lr/{{ ds }}"
+MODEL_PATH = "/data/model/{{ ds }}"
 MOUNT = Mount(
     source="/Users/alexandersidorenko/ira/mlops/Irina_Pugaeva/airflow_ml_dags/data/",
     target="/data",
@@ -68,7 +68,7 @@ with DAG(
     val_model = DockerOperator(
         task_id="validation",
         image="airflow-model-validation",
-        command=f"--model-dir={MODEL_PATH} --data-dir={PROCESSED_DATA_PATH}",
+        command=f"--model-dir={MODEL_PATH} --input-dir={SPLITTED_DATA_PATH}",
         network_mode="bridge",
         do_xcom_push=False,
         mount_tmp_dir=False,

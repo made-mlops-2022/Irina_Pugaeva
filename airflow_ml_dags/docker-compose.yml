@@ -119,6 +119,8 @@ services:
     build:
       context: images/airflow-model-prediction
     image: airflow-model-prediction
+    depends_on:
+      - base
     restart: "no"
 
 

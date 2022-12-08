@@ -3,12 +3,11 @@ from datetime import timedelta
 import pendulum
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
-from airflow.models import Variable
 from docker.types import Mount
 
 
-PROCESSED_DATA_PATH = "/data/processed/{{ ds }}"
-MODEL_PATH = Variable.get("MODEL_PATH")
+DATA_PATH = "/data/splitted/{{ ds }}"
+MODEL_PATH = "/data/model/{{ ds }}"
 PREDICTIONS_PATH = "/data/predictions/{{ ds }}"
 MOUNT = Mount(
     source="/Users/alexandersidorenko/ira/mlops/Irina_Pugaeva/airflow_ml_dags/data/",
@@ -27,18 +26,18 @@ DEFAULT_ARGS = {
 }
 
 with DAG(
-        "predict",
-        default_args=DEFAULT_ARGS,
-        schedule_interval="@daily",
-        start_date=pendulum.today('UTC').add(days=0),
+    "predict",
+    default_args=DEFAULT_ARGS,
+    schedule_interval="@daily",
+    start_date=pendulum.today("UTC").add(days=0),
 ) as dag:
     predict = DockerOperator(
-        image="airflow-model-prediction",
-        command=f"--input-dir={PROCESSED_DATA_PATH} --model-dir={MODEL_PATH} --preds-dir={PREDICTIONS_PATH}",
         task_id="docker-airflow-prediction",
+        image="airflow-model-prediction",
+        command=f"--input-dir={DATA_PATH} --model-dir={MODEL_PATH} --preds-dir={PREDICTIONS_PATH}",
         do_xcom_push=False,
         mount_tmp_dir=False,
-        mounts=[MOUNT]
+        mounts=[MOUNT],
     )
 
     predict

@@ -18,7 +18,7 @@ METRIC_PATH = "metrics.txt"
 @click.option("--model-dir")
 def validate(input_dir: str, model_dir: str):
 
-    X_val = pd.read_csv(os.path.join(input_dir, VAL_DATA_PATH), index_col=0)
+    X_val = pd.read_csv(os.path.join(input_dir, VAL_DATA_PATH))
     y_val = pd.read_csv(os.path.join(input_dir, VAL_TARGET_PATH))
 
     with open(os.path.join(model_dir, MODEL_PATH), "rb") as f:

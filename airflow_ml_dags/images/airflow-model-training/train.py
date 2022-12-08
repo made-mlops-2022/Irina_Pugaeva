@@ -16,8 +16,8 @@ RANDOM_STATE = 42
 @click.option("--output-dir")
 def train(input_dir: str, output_dir: str):
 
-    data = pd.read_csv(os.path.join(input_dir, TRAIN_DATA_PATH))
-    targets = pd.read_csv(os.path.join(input_dir, TRAIN_TARGET_PATH))
+    X_train = pd.read_csv(os.path.join(input_dir, TRAIN_DATA_PATH))
+    y_train = pd.read_csv(os.path.join(input_dir, TRAIN_TARGET_PATH))
 
     clf = LogisticRegression(random_state=RANDOM_STATE)
     clf.fit(X_train, y_train)

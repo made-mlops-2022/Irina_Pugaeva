@@ -21,8 +21,8 @@ RANDOM_STATE = 42
 @click.option("--input-dir")
 @click.option("--output-dir")
 def split(input_dir: str, output_dir: str):
-    data = pd.read_csv(os.path.join(input_dir, PROCESSED_DATA_PATH), index_col=0)
-    target = pd.read_csv(os.path.join(input_dir, TARGET_PATH), index_col=0)
+    data = pd.read_csv(os.path.join(input_dir, PROCESSED_DATA_PATH))
+    target = pd.read_csv(os.path.join(input_dir, TARGET_PATH))
 
     X_train, X_val, y_train, y_val = train_test_split(
         data, target, test_size=TEST_SIZE, random_state=RANDOM_STATE
