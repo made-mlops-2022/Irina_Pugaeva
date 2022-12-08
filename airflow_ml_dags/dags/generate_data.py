@@ -16,6 +16,11 @@ DEFAULT_ARGS = {
 }
 
 DATA_DIR = "data/raw"
+MOUNT = Mount(
+    source="/Users/alexandersidorenko/ira/mlops/Irina_Pugaeva/airflow_ml_dags/data/",
+    target="/data",
+    type="bind",
+)
 
 with DAG(
     "data_generator",
@@ -31,13 +36,7 @@ with DAG(
         command=f"--output-dir={path}",
         network_mode="bridge",
         do_xcom_push=False,
-        mounts=[
-            Mount(
-                source="/Users/alexandersidorenko/ira/mlops/Irina_Pugaeva/airflow_ml_dags/data/",
-                target="/data",
-                type="bind",
-            )
-        ],
+        mounts=[MOUNT],
     )
 
     generate_data
